@@ -4,8 +4,8 @@ import java.awt.*;
 
 public class Background extends Sprite{
 
-    private final float START_SPEED = 2f;
-    private final float SPEED = 2f;
+    private final float START_SPEED = 0.002f;
+    private final float SPEED = 0.5f;
 
     private Color color;
 
@@ -17,9 +17,14 @@ public class Background extends Sprite{
     private float blue;
 
 
-    private float vR = (float)(START_SPEED + (Math.random() * SPEED));
-    private float vG = (float)(START_SPEED + (Math.random() * SPEED));
-    private float vB = (float)(START_SPEED + (Math.random() * SPEED));
+    private final float vR = (float)(START_SPEED + (Math.random() * SPEED));
+    private final float vG = (float)(START_SPEED + (Math.random() * SPEED));
+    private final float vB = (float)(START_SPEED + (Math.random() * SPEED));
+
+    private float phR = (float)(Math.random() * 2. * Math.PI);
+    private float phG = (float)(Math.random() * 2. * Math.PI);
+    private float phB = (float)(Math.random() * 2. * Math.PI);
+
 
 
     Background(int width, int height)
@@ -27,52 +32,18 @@ public class Background extends Sprite{
         this.width = width;
         this.height = height;
 
-        red = (float)(Math.random() * 255);
-        green = (float)(Math.random() * 255);
-        blue = (float)(Math.random() * 255);
-
-        color = new Color((int)red, (int)green, (int)blue);
     }
 
 
     @Override
     void update(GameCanvas canvas, float deltaTime) {
-        red += vR;
-        green += vG;
-        blue += vB;
+        phR += (float)(2.* Math.PI * deltaTime * vR);
+        phG += (float)(2.* Math.PI * deltaTime * vG);
+        phB += (float)(2.* Math.PI * deltaTime * vB);
 
-        if(red > 255f)
-        {
-            red = 255f;
-            vR = - vR;
-        }
-        if(red < 0f)
-        {
-            red = 0f;
-            vR = - vR;
-        }
-
-        if(green > 255f)
-        {
-            green = 255f;
-            vG = - vG;
-        }
-        if(green < 0f)
-        {
-            green = 0f;
-            vG = - vG;
-        }
-
-        if(blue > 255f)
-        {
-            blue = 255f;
-            vB = - vB;
-        }
-        if(blue < 0f)
-        {
-            blue = 0f;
-            vB = - vB;
-        }
+        red = (float)(127.5 + 127.5 * Math.sin( phR ) );
+        green = (float)(127.5 + 127.5 * Math.sin( phG ) );
+        blue = (float)(127.5 + 127.5 * Math.sin( phB  ) );
 
         color = new Color((int)red, (int)green, (int)blue);
     }
